@@ -2,25 +2,43 @@ const cardsImgs = ["angular.png", "d3.png", "evista.png", "jenkins.png", "postcs
 
 let gameArea = document.getElementById("gameArea")
 let deckSize = document.getElementById("deckSize")
+let deckSizeLanding = document.getElementById("deckSizeLanding")
+let menu = document.getElementById("menu")
+let landingPage = document.getElementById("landingPage")
+let triesCounterHTML = document.getElementById("triesCounter")
+let bestScoreHTML = document.getElementById("bestScore")
+let gameContainer = document.getElementById("gameContainer")
+
 let cards = null
 let cardsPlaced = null
+let cardsPlacedOriginal = null
 let cardImg = null
 let cardsImgsCopy = null
 let cardFlipped_first_i = null
 let cardFlipped_second_i = null
 let secondFlipInProgress = false
-let playerTries = 0
+let triesCounter = 0
 let hideTimeout = null
+let bestScore = 0
 
 function newGame() {
-    cards = Number(deckSize.value)
+    if(menu.hasAttribute("hidden")) {
+        menu.removeAttribute("hidden")
+        landingPage.setAttribute("hidden", "")
+        gameContainer.removeAttribute("hidden")
+        cards = Number(deckSizeLanding.value)
+    } else {
+        cards = Number(deckSize.value)
+    }
+
     cardsPlaced = new Array(cards)
     cardImg = null
-    cardsImgsCopy = [...cardsImgs];
+    cardsImgsCopy = [...cardsImgs]
     cardFlipped_first_i = null
     cardFlipped_second_i = null
     secondFlipInProgress = false
-    playerTries = 0
+    triesCounter = 0
+    triesCounterHTML.innerText = triesCounter
 
     clearTimeout(hideTimeout)
 
@@ -45,6 +63,23 @@ function newGame() {
         cardsPlaced[slot] = cardImg
     }
 
+    cardsPlacedOriginal = [...cardsPlaced]    
+    drawCards()
+}
+
+function restartGame() {
+    cardsPlaced = [...cardsPlacedOriginal]
+    cardFlipped_first_i = null
+    cardFlipped_second_i = null
+    secondFlipInProgress = false
+    triesCounter = 0
+    triesCounterHTML.innerText = triesCounter
+
+    clearTimeout(hideTimeout)
+    drawCards()
+}
+
+function drawCards() {
     gameArea.innerHTML = ""
     
     for(let i = 0; i < cards; i++) {
@@ -77,8 +112,8 @@ function flipCard(i) {
         secondFlipInProgress = true
     }
 
-    playerTries++
-    console.log(playerTries)
+    triesCounter++
+    triesCounterHTML.innerText = triesCounter
 
     let firstCard = document.getElementById(cardFlipped_first_i)
     let secondCard = document.getElementById(cardFlipped_second_i)

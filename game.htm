@@ -11,7 +11,7 @@
                 <img class="bi me-2" src="cards/evista.png" alt="" width="150" height="">
             </a>
     
-            <div class="col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <div id="menu" class="col-12 col-md-auto mb-2 mb-md-0" hidden>
                 <label for="deckSize" class="form-label" style="color:rgb(173, 168, 168);">Deck size:</label>
                 <select id="deckSize" class="form-select" style="width: 5rem; display: inline;">
                     <option value="6" selected>6</option>
@@ -30,7 +30,32 @@
         </header>
         <br>
         <div class="container" style="width: 50rem;">
-            <div id="gameArea" class="row row-cols-1 row-cols-md-5 g-4">
+            <div id="landingPage" class="px-4 py-5 my-5 text-center">
+                <h1 class="display-10 fw-bold">Splendex Memory Game</h1>
+                <br><br><br><br><br>
+                <div class="col-lg-6 mx-auto">
+                    <label for="deckSizeLanding" class="form-label">Deck Size</label>
+                    <select id="deckSizeLanding" class="form-select">
+                        <option value="6" selected>6</option>
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="12">12</option>
+                        <option value="14">14</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                        <option value="20">20</option>
+                    </select>
+                    <br>
+                    <button onclick="newGame()" type="button" class="btn btn-danger">START NEW GAME</button>
+                </div>
+            </div>
+            <div id="gameContainer" class="container" hidden>
+                <div class="row mb-3 text-center">
+                    <div class="d-flex justify-content-start align-items-center col-md-4"><p>Current tries: <b id="triesCounter">0</b></p></div>
+                    <div class="col-md-4">Best:<br><h2 id="bestScore">0</h2></div>
+                    <div class="d-flex justify-content-end align-items-center col-md-4"><button onclick="restartGame()" type="button" class="btn btn-outline-dark">RESTART</button></div>
+                </div>
+                <div id="gameArea" class="row row-cols-1 row-cols-md-5 g-5"></div>
             </div>
         </div>
 
