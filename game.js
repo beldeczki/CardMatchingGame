@@ -8,6 +8,7 @@ let landingPage = document.getElementById("landingPage")
 let triesCounterHTML = document.getElementById("triesCounter")
 let bestScoreHTML = document.getElementById("bestScore")
 let gameContainer = document.getElementById("gameContainer")
+let resumeButton = document.getElementById("resumeButton")
 
 let cards = null
 let cardsPlaced = null
@@ -22,6 +23,10 @@ let hideTimeout = null
 let pairsFound = 0
 
 if(localStorage.getItem("cardsPlaced") != null) {
+    resumeButton.removeAttribute("disabled")
+}
+
+function resumeGame() {
     cardsPlacedOriginal = localStorage.getItem("cardsPlacedOriginal").split(",")
     cardsPlaced = cardsPlacedOriginal
     cards = cardsPlaced.length
@@ -40,6 +45,7 @@ if(localStorage.getItem("cardsPlaced") != null) {
     menu.removeAttribute("hidden")
     landingPage.setAttribute("hidden", "")
     gameContainer.removeAttribute("hidden")
+    deckSize.value = cards
     pairsFound /= 2
 
     if(Number(localStorage.getItem("best" + cards)) === 999999)
@@ -57,6 +63,7 @@ function newGame() {
         landingPage.setAttribute("hidden", "")
         gameContainer.removeAttribute("hidden")
         cards = Number(deckSizeLanding.value)
+        deckSize.value = cards
     } else {
         cards = Number(deckSize.value)
     }
@@ -185,7 +192,7 @@ function flipCard(i) {
             localStorage.removeItem("cardsPlacedOriginal")
             localStorage.removeItem("triesCounter")
 
-            alert("Vége a játéknak!")
+            alert("Congratulations, you found all the pairs.")
         }
 
         firstCard.setAttribute("style", "opacity: 0.5;")

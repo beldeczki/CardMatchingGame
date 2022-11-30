@@ -32,7 +32,9 @@
         <div class="container" style="width: 50rem;">
             <div id="landingPage" class="px-4 py-5 my-5 text-center">
                 <h1 class="display-10 fw-bold">Splendex Memory Game</h1>
-                <br><br><br><br><br>
+                <br><br>
+                <p class="lead mb-4">The object of the game is to turn over pairs of matching cards. All of the cards are laid face down and two cards are flipped face up over each turn. If the two revealed cards are identical, they are removed from the play. If they are not identical, they are turned face down again. The game ends when all the cards are removed.</p>
+                <br><br>
                 <div class="col-lg-6 mx-auto">
                     <label for="deckSizeLanding" class="form-label">Deck Size</label>
                     <select id="deckSizeLanding" class="form-select">
@@ -47,6 +49,8 @@
                     </select>
                     <br>
                     <button onclick="newGame()" type="button" class="btn btn-danger">START NEW GAME</button>
+                    <p class="lead mb-1">or</p>
+                    <button id="resumeButton" onclick="resumeGame()" type="button" class="btn btn-danger" disabled>CONTINUE GAME</button>
                 </div>
             </div>
             <div id="gameContainer" class="container" hidden>
