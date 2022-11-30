@@ -175,12 +175,9 @@ function flipCard(i) {
     if(cardsPlaced[cardFlipped_first_i] === cardsPlaced[cardFlipped_second_i]) {
         cardsPlaced[cardFlipped_first_i] = "flipped"
         cardsPlaced[cardFlipped_second_i] = "flipped"
-
         secondFlipInProgress = false
-
         pairsFound++
         localStorage.setItem("cardsPlaced", cardsPlaced)
-        console.log(localStorage.getItem("cardsPlaced"))
 
         if(pairsFound === cards / 2) {
             if(triesCounter < localStorage.getItem("best" + cards)) {
@@ -191,8 +188,10 @@ function flipCard(i) {
             localStorage.removeItem("cardsPlaced")
             localStorage.removeItem("cardsPlacedOriginal")
             localStorage.removeItem("triesCounter")
-
-            alert("Congratulations, you found all the pairs.")
+            
+            setTimeout(function() {
+                alert("Congratulations, you found all the pairs.")
+            }, 50)
         }
 
         firstCard.setAttribute("style", "opacity: 0.5;")
