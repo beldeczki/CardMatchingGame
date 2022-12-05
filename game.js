@@ -17,10 +17,19 @@ let cardImg = null
 let cardsImgsCopy = null
 let cardFlipped_first_i = null
 let cardFlipped_second_i = null
-let secondFlipInProgress = false
+let timeoutInProgress = false
 let triesCounter = 0
 let hideTimeout = null
 let pairsFound = 0
+
+function resetVars() {
+    cardFlipped_first_i = null
+    cardFlipped_second_i = null
+    timeoutInProgress = false
+    triesCounter = 0
+    triesCounterHTML.innerText = triesCounter
+    pairsFound = 0
+}
 
 if(localStorage.getItem("cardsPlaced") != null) {
     resumeButton.removeAttribute("disabled")
@@ -71,12 +80,7 @@ function newGame() {
     cardsPlaced = new Array(cards)
     cardImg = null
     cardsImgsCopy = [...cardsImgs]
-    cardFlipped_first_i = null
-    cardFlipped_second_i = null
-    secondFlipInProgress = false
-    triesCounter = 0
-    triesCounterHTML.innerText = triesCounter
-    pairsFound = 0
+    resetVars()
 
     let bestScore = localStorage.getItem("best" + cards)
     if(bestScore == null)
@@ -118,12 +122,7 @@ function newGame() {
 
 function restartGame() {
     cardsPlaced = [...cardsPlacedOriginal]
-    cardFlipped_first_i = null
-    cardFlipped_second_i = null
-    secondFlipInProgress = false
-    triesCounter = 0
-    triesCounterHTML.innerText = triesCounter
-    pairsFound = 0
+    resetVars()
     localStorage.setItem("cardsPlaced", cardsPlaced)
     localStorage.setItem("cardsPlacedOriginal", cardsPlacedOriginal)
     localStorage.setItem("triesCounter", triesCounter)
@@ -145,7 +144,7 @@ function drawCards() {
 }
 
 function flipCard(i) {
-    if(cardsPlaced[i] == "flipped" || secondFlipInProgress)
+    if(cardsPlaced[i] == "flipped" || timeoutInProgress)
         return
 
     let card = document.getElementById(i)
@@ -161,8 +160,6 @@ function flipCard(i) {
             cardFlipped_second_i = null
             return
         }
-
-        secondFlipInProgress = true
     }
 
     triesCounter++
@@ -175,7 +172,6 @@ function flipCard(i) {
     if(cardsPlaced[cardFlipped_first_i] === cardsPlaced[cardFlipped_second_i]) {
         cardsPlaced[cardFlipped_first_i] = "flipped"
         cardsPlaced[cardFlipped_second_i] = "flipped"
-        secondFlipInProgress = false
         pairsFound++
         localStorage.setItem("cardsPlaced", cardsPlaced)
 
@@ -197,11 +193,12 @@ function flipCard(i) {
         firstCard.setAttribute("style", "opacity: 0.5;")
         secondCard.setAttribute("style", "opacity: 0.5;")
     } else {
+        timeoutInProgress = true
         hideTimeout = setTimeout(function() {
             firstCard.setAttribute("hidden", "")
             secondCard.setAttribute("hidden", "")
 
-            secondFlipInProgress = false
+            timeoutInProgress = false
         }, 1000)
     }
 
